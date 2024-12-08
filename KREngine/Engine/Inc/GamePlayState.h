@@ -2,8 +2,10 @@
 
 #include "AppState.h"
 #include "RenderService.h"
+#include "InputService.h"
 
-namespace KREngine {
+namespace KREngine 
+{
     class GameplayState : public AppState 
     {
     public:
@@ -13,6 +15,12 @@ namespace KREngine {
         void Render() override;
 
     private:
-        std::string circleName = "circle";
+        std::vector<sf::Drawable*> shapes;
+        int currentShapeIndex = -1;
+        float speed = 50.0f;
+
+        void AddCircle();
+        void AddTriangle();
+        void SelectNextShape();
     };
 }

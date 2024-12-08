@@ -1,36 +1,31 @@
 #pragma once
 
 #include "Common.h"
-#include <map>
-#include <memory>
-#include <string>
+#include "AppState.h"
 
-namespace KREngine 
+namespace KREngine
 {
-    class AppState;
-
-    struct AppConfig 
+    struct AppConfig
     {
         std::wstring appName = L"KREngine App";
-        uint32_t winWidth = 1280;
-        uint32_t winHeight = 720;
-        uint32_t debugDrawLimit = 10000; // Maximum debug objects to draw
+        uint32_t winWidth = 800;
+        uint32_t winHeight = 600;
     };
 
-    class App final {
+    class App
+    {
     public:
-        // Add a state to the app
         template <class StateType>
-        void AddState(const std::string& stateName) 
+        void AddState(const std::string& stateName)
         {
             static_assert(std::is_base_of_v<AppState, StateType>, "StateType must inherit from AppState");
 
             auto [iter, success] = mAppStates.try_emplace(stateName, nullptr);
-            if (success) 
+            if (success)
             {
                 auto& ptr = iter->second;
                 ptr = std::make_unique<StateType>();
-                if (!mCurrentState) 
+                if (!mCurrentState)
                 {
                     LOG("App -- Setting initial state: %s", stateName.c_str());
                     mCurrentState = ptr.get();
@@ -38,21 +33,23 @@ namespace KREngine
             }
         }
 
-        // Change the active state
-        void ChangeState(const std::string& stateName);
-
-        // Run the application
         void Run(const AppConfig& config);
-
-        // Quit the application
         void Quit();
 
-    private:
-        using AppStateMap = std::map<std::string, std::unique_ptr<AppState>>;
+        sf::RenderWindow* GetWindow()
+        {
+            return window;
+        }
 
-        AppStateMap mAppStates;  // Stores all app states
+    private:
+        std::map<std::string, std::unique_ptr<AppState>> mAppStates;
         AppState* mCurrentState = nullptr;
         AppState* mNextState = nullptr;
         bool mRunning = false;
+        sf::RenderWindow* window = nullptr;
+
+        void Initialize(const AppConfig& config);
+        void Terminate();
     };
 }
+

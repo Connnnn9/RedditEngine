@@ -1,58 +1,86 @@
 #include "Precompiled.h"
 #include "App.h"
-#include "AppState.h"
+#include "RenderService.h"
+#include "InputService.h"
 
-namespace KREngine {
+namespace KREngine
+{
+    void App::Initialize(const AppConfig& config)
+    {
+        LOG("Initializing KREngine...");
 
-    void App::ChangeState(const std::string& stateName) {
-        auto iter = mAppStates.find(stateName);
-        if (iter != mAppStates.end()) {
-            LOG("App -- Changing state to: %s", stateName.c_str());
-            mNextState = iter->second.get();
-        }
-        else {
-            LOG("App -- State '%s' not found.", stateName.c_str());
-        }
-    }
+        window = new sf::RenderWindow(sf::VideoMode(config.winWidth, config.winHeight), config.appName);
 
-    void App::Run(const AppConfig& config) {
-        LOG("App -- Starting application: %ls", config.appName.c_str());
+        RenderService::GetInstance().Initialize(window);
+        InputService::GetInstance().Initialize(window);
+
         mRunning = true;
 
-        // Initialize the current state
-        if (mCurrentState) {
+        LOG("KREngine initialized successfully.");
+    }
+
+    void App::Run(const AppConfig& config)
+    {
+        Initialize(config);
+
+        if (mCurrentState)
+        {
             mCurrentState->Initialize();
         }
 
-        // Main loop
-        while (mRunning) {
-            if (mNextState) {
-                // Terminate the current state
-                if (mCurrentState) {
+        while (mRunning)
+        {
+            InputService::GetInstance().Update();
+
+            // Terminate the app when Escape is pressed
+            if (InputService::GetInstance().IsKeyPressed(sf::Keyboard::Escape))
+            {
+                Quit();
+            }
+
+            if (mNextState)
+            {
+                if (mCurrentState)
+                {
                     mCurrentState->Terminate();
                 }
-
-                // Switch to the next state
                 mCurrentState = mNextState;
                 mNextState = nullptr;
                 mCurrentState->Initialize();
             }
 
-            // Update and render the current state
-            if (mCurrentState) {
+            if (mCurrentState)
+            {
                 mCurrentState->Update();
                 mCurrentState->Render();
             }
         }
 
-        // Clean up
-        if (mCurrentState) {
+        if (mCurrentState)
+        {
             mCurrentState->Terminate();
         }
-        LOG("App -- Application exited.");
+
+        Terminate();
     }
 
-    void App::Quit() {
+
+    void App::Terminate()
+    {
+        LOG("Terminating KREngine...");
+
+        RenderService::GetInstance().Terminate();
+        if (window)
+        {
+            delete window;
+            window = nullptr;
+        }
+
+        LOG("KREngine terminated successfully.");
+    }
+
+    void App::Quit()
+    {
         LOG("App -- Quitting application.");
         mRunning = false;
     }

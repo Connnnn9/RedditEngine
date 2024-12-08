@@ -7,6 +7,12 @@
     <Filter Include="Inc">
       <UniqueIdentifier>{e59ff616-c19a-4b2c-8dc4-35c3407af0f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Services">
+      <UniqueIdentifier>{b347d075-fbec-4035-8962-cdfc91dce4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Services">
+      <UniqueIdentifier>{e032a326-1e87-456f-b1a7-939a0740dbb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Precompiled.cpp">
@@ -19,7 +25,10 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\RenderService.cpp">
-      <Filter>Src</Filter>
+      <Filter>Src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\InputService.cpp">
+      <Filter>Src\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +48,10 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RenderService.h">
-      <Filter>Inc</Filter>
+      <Filter>Inc\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\InputService.h">
+      <Filter>Inc\Services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

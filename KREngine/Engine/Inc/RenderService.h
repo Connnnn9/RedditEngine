@@ -4,8 +4,10 @@
 #include <unordered_map>
 #include <string>
 
-namespace KREngine {
-    class RenderService {
+namespace KREngine
+{
+    class RenderService
+    {
     public:
         static RenderService& GetInstance();
 
@@ -18,7 +20,6 @@ namespace KREngine {
 
     private:
         RenderService() = default;
-        ~RenderService() = default;
 
         sf::RenderWindow* window = nullptr;
         std::unordered_map<std::string, sf::Drawable*> drawables;

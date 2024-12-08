@@ -2,27 +2,28 @@
 #include "RenderService.h"
 #include "Common.h"
 
-namespace KREngine 
+namespace KREngine
 {
-
-    RenderService& RenderService::GetInstance() 
+    RenderService& RenderService::GetInstance()
     {
         static RenderService instance;
         return instance;
     }
 
-    void RenderService::Initialize(sf::RenderWindow* renderWindow) 
+    void RenderService::Initialize(sf::RenderWindow* renderWindow)
     {
         window = renderWindow;
         LOG("RenderService -- Initialized");
     }
 
-    void RenderService::Render() 
+    void RenderService::Render()
     {
-        if (window) {
+        if (window)
+        {
             window->clear(sf::Color::Black);
 
-            for (auto& [name, drawable] : drawables) {
+            for (auto& [name, drawable] : drawables)
+            {
                 window->draw(*drawable);
             }
 
@@ -30,20 +31,24 @@ namespace KREngine
         }
     }
 
-    void RenderService::Terminate() 
+    void RenderService::Terminate()
     {
         LOG("RenderService -- Terminated");
         window = nullptr;
         drawables.clear();
     }
 
-    void RenderService::AddDrawable(const std::string& name, sf::Drawable* drawable) 
+    void RenderService::AddDrawable(const std::string& name, sf::Drawable* drawable)
     {
         drawables[name] = drawable;
+        LOG("Drawable added: %s", name.c_str());
     }
 
-    void RenderService::RemoveDrawable(const std::string& name) 
+    void RenderService::RemoveDrawable(const std::string& name)
     {
         drawables.erase(name);
+        LOG("Drawable removed: %s", name.c_str());
     }
 }
+
+
