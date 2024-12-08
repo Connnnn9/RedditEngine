@@ -128,14 +128,14 @@ sfml-system-d.lib%(AdditionalDependencies)</AdditionalDependencies>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);sfml-graphics-s.lib sfml-window-s.lib 
-sfml-system-s.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;sfml-network-s.lib;sfml-main-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
