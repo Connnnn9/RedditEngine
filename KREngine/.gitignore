@@ -5,3 +5,106 @@
 build/
 cmake-build-*/
 CMakeUserPresets.json
+
+# Ignore all build artifacts
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Ignore Unreal Engine auto-generated files
+.vscode/
+*.code-workspace
+*.sln
+*.suo
+*.vcxproj*
+*.opensdf
+*.opendb
+*.manifest
+*.tlog
+*.log
+*.tmp
+*.db
+*.CopyComplete
+*.ipch
+*.aps
+*.ncb
+*.user
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+*.VC.VC.db
+
+# Ignore certain Unreal Engine content types
+*.uasset
+*.umap
+*.ufnt
+*.ubulk
+*.uexp
+*.ubt
+*.uproject
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore Visual Studio Code files
+.vscode/
+.history/
+*.code-workspace
+
+# Ignore Windows Thumbnail Cache files
+Thumbs.db
+
+# Ignore the config folder except for specific files
+!Config/
+Config/*
+!Config/DefaultEditor.ini
+!Config/DefaultEngine.ini
+!Config/DefaultGame.ini
+!Config/DefaultInput.ini
+
+# Ignore Build and Distribution directories
+Build/
+Dist/
+
+# Ignore files created by Git LFS
+*.uasset
+*.umap
+*.ubulk
+*.uexp
+*.ufnt
+*.pch
+
+# Ignore temporary files
+*.bak
+*.tmp
+*.temp
+
+# Ignore Unreal Engine 5's DerivedDataCache and similar
+DerivedDataCache/
+DerivedDataBackups/
+DerivedDataBuilds/
+DerivedDataDownloads/
+DerivedDataCacheCompressed/
+
+# Ignore any additional large files not tracked by LFS
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.wav
+*.mp3
+*.flac
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.exr
+*.hdr
+*.tif
+*.bmp
+*.ico
+*.tiff
+*.psd
+*.ai
+*.svg
