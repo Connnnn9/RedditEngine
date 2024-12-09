@@ -1,4 +1,7 @@
+#include "Precompiled.h"
 #include "UIService.h"
+
+using namespace KREngine::UI;
 
 namespace KREngine
 {
@@ -18,9 +21,9 @@ namespace KREngine
         mUIManager.Terminate();
     }
 
-    void UIService::Update()
+    void UIService::Update(sf::RenderWindow& window)
     {
-        mUIManager.Update();
+        mUIManager.Update(window);
     }
 
     void UIService::Render()

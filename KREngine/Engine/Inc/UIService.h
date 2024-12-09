@@ -1,6 +1,7 @@
 #pragma once
 
-#include "UIManager.h"
+#include "../Framework/UI/Inc/UIManager.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace KREngine
 {
@@ -11,12 +12,12 @@ namespace KREngine
 
         void Initialize();
         void Terminate();
-        void Update();
+        void Update(sf::RenderWindow& window);
         void Render();
 
-        UIManager& GetUIManager();
+        UI::UIManager& GetUIManager();
 
     private:
-        UIManager mUIManager;
+        UI::UIManager mUIManager;
     };
 }

@@ -20,8 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\imconfig.h" />
-    <ClInclude Include="Inc\imgui-SFML.h" />
-    <ClInclude Include="Inc\imgui-SFML_export.h" />
     <ClInclude Include="Inc\imgui.h" />
     <ClInclude Include="Inc\imgui_impl_dx11.h" />
     <ClInclude Include="Inc\imgui_impl_win32.h" />
@@ -31,7 +29,6 @@
     <ClInclude Include="Src\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\ImGui-SFML.cpp" />
     <ClCompile Include="Src\imgui.cpp" />
     <ClCompile Include="Src\imgui_demo.cpp" />
     <ClCompile Include="Src\imgui_draw.cpp" />

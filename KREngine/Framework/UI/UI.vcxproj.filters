@@ -17,6 +17,9 @@
     <ClCompile Include="Src\Precompiled.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\OptionBox.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\UIManager.h">
@@ -24,6 +27,9 @@
     </ClInclude>
     <ClInclude Include="Src\Precompiled.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\OptionBox.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

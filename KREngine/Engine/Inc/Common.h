@@ -25,7 +25,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <ImGui/Inc/imgui.h>
-#include <imgui/Inc/imgui-SFML.h>
 #include <../Framework/UI/Inc/UIManager.h>
 #include <windows.h>
 

@@ -1,21 +1,31 @@
-#include "App.h"
-#include "GameplayState.h"
+#include "imgui.h"
+#include "UIService.h"
+#include <SFML/Graphics.hpp>
 
-using namespace KREngine;
-using namespace std;
 int main()
 {
-	cout << "you should see this right?";
-	
-	App engine;
-	engine.AddState<GameplayState>("Gameplay");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "Test Application");
+    auto& uiService = KREngine::UIService::GetInstance();
 
-	AppConfig config;
-	config.appName = L"Test_1: Engine Showcase";
-	config.winWidth = 1200;
-	config.winHeight = 800;
+    uiService.Initialize();
 
-	engine.Run(config);
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        uiService.Update(window);
 
-	return 0;
+        window.clear();
+        uiService.Render();
+        window.display();
+    }
+
+    uiService.Terminate();
+    return 0;
 }
+
+
