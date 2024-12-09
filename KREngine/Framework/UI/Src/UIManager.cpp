@@ -2,6 +2,8 @@
 #include "UIManager.h"
 #include <imgui.h>
 
+#define LOG(message) std::cout << "[LOG] " << message << std::endl;
+
 namespace KREngine
 {
 	namespace UI
@@ -29,12 +31,14 @@ namespace KREngine
 		{
 			fontTexture.~Texture();
 			ImGui::DestroyContext();
+
 		}
 
 		void UIManager::UpdateDisplaySize(float width, float height)
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			io.DisplaySize = ImVec2(width, height);
+			LOG("DisplaySize set to: " + std::to_string(width) + "x" + std::to_string(height));
 		}
 
 		void UIManager::Update(sf::RenderWindow& window)
@@ -45,6 +49,10 @@ namespace KREngine
 
 		void UIManager::Render()
 		{
+			ImGui::Begin("KREngine");
+			ImGui::Text("WElCOME");
+			ImGui::End();
+
 			ImGui::Render();
 		}
 

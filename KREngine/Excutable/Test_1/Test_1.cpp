@@ -1,13 +1,11 @@
-#include "imgui.h"
 #include "UIService.h"
 #include <SFML/Graphics.hpp>
+#include <imgui.h>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "Test Application");
-    auto& uiService = KREngine::UIService::GetInstance();
-
-    uiService.Initialize();
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "Minimal ImGui Test");
+    ImGui::CreateContext();
 
     while (window.isOpen())
     {
@@ -17,15 +15,17 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        uiService.Update(window);
+
+        ImGui::NewFrame();
+        ImGui::Begin("Test Window");
+        ImGui::Text("Hello, ImGui!");
+        ImGui::End();
+        ImGui::Render();
 
         window.clear();
-        uiService.Render();
         window.display();
     }
 
-    uiService.Terminate();
+    ImGui::DestroyContext();
     return 0;
 }
-
-
