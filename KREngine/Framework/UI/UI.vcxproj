@@ -106,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\lcv0408969\Documents\GitHub\RedditEngine\KREngine\External\ImGui\Inc;C:\Users\lcv0408969\Documents\GitHub\RedditEngine\SFML-2.6.2\include;$(SolutionDir)\Framework\UI\Inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Inc;$(SolutionDir)\Framework\UI\Inc;$(SolutionDir)\External\ImGui\Inc;$(SolutionDir)\Framework;$(SolutionDir)\Engine\Inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

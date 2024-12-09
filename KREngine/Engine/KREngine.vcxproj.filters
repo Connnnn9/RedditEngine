@@ -30,6 +30,9 @@
     <ClCompile Include="Src\InputService.cpp">
       <Filter>Src\Services</Filter>
     </ClCompile>
+    <ClCompile Include="Src\UIService.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Precompiled.h">
@@ -51,6 +54,9 @@
       <Filter>Inc\Services</Filter>
     </ClInclude>
     <ClInclude Include="Inc\InputService.h">
+      <Filter>Inc\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\UIService.h">
       <Filter>Inc\Services</Filter>
     </ClInclude>
   </ItemGroup>

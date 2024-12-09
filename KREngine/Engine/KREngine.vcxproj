@@ -27,6 +27,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Src\RenderService.cpp" />
+    <ClCompile Include="Src\UIService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\App.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Inc\GamePlayState.h" />
     <ClInclude Include="Inc\InputService.h" />
     <ClInclude Include="Inc\RenderService.h" />
+    <ClInclude Include="Inc\UIService.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
@@ -142,8 +144,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\include;$(ProjectDir)inc;$(SolutionDir)Framework;$(SolutionDir)External;$(SolutionDir)\External\ImGui
-$(SolutionDir)\External\ImGui-SFML</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;$(SolutionDir)\External\SFML-2.6.2\include;$(SolutionDir)Framework;$(SolutionDir)External;$(SolutionDir)\External\ImGui</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
