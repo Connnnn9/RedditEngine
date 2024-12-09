@@ -24,6 +24,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <ImGui/Inc/imgui.h>
+#include <imgui/Inc/imgui-SFML.h>
 #include <windows.h>
 
 // Namespace for constants

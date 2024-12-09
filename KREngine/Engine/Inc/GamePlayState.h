@@ -4,9 +4,9 @@
 #include "RenderService.h"
 #include "InputService.h"
 
-namespace KREngine 
+namespace KREngine
 {
-    class GameplayState : public AppState 
+    class GameplayState : public AppState
     {
     public:
         void Initialize() override;
@@ -17,10 +17,12 @@ namespace KREngine
     private:
         std::vector<sf::Drawable*> shapes;
         int currentShapeIndex = -1;
-        float speed = 50.0f;
+        float speed = 10.0f;
 
         void AddCircle();
         void AddTriangle();
+        void DeleteCurrentShape();
         void SelectNextShape();
     };
 }
+

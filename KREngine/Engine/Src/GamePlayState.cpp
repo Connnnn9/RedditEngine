@@ -6,16 +6,10 @@ namespace KREngine
 {
     void GameplayState::Initialize()
     {
-        LOG("GameplayState -- Initializing...");
-
-        auto& renderService = RenderService::GetInstance();
-
-        LOG("GameplayState -- Ready for user input to add shapes.");
     }
 
     void GameplayState::Terminate()
     {
-        LOG("GameplayState -- Terminating...");
 
         auto& renderService = RenderService::GetInstance();
 
@@ -29,7 +23,6 @@ namespace KREngine
 
     void GameplayState::Update()
     {
-        LOG("GameplayState -- Updating...");
         auto& input = InputService::GetInstance();
 
         if (input.IsKeyPressed(sf::Keyboard::Num1))
@@ -43,14 +36,10 @@ namespace KREngine
 
         if (currentShapeIndex >= 0 && currentShapeIndex < static_cast<int>(shapes.size()))
         {
-            auto* drawable = shapes[currentShapeIndex];
-
-            auto* shape = dynamic_cast<sf::Shape*>(drawable);
+            auto* shape = dynamic_cast<sf::Shape*>(shapes[currentShapeIndex]);
             if (shape)
             {
                 sf::Vector2f position = shape->getPosition();
-                LOG("Current Shape Position: %f, %f", position.x, position.y);
-
                 float deltaTime = 0.016f;
                 if (input.IsKeyPressed(sf::Keyboard::Up))
                 {
@@ -68,13 +57,7 @@ namespace KREngine
                 {
                     position.x += speed * deltaTime;
                 }
-
                 shape->setPosition(position);
-                LOG("Updated Shape Position: %f, %f", position.x, position.y);
-            }
-            else
-            {
-                LOG("Selected shape is not movable.");
             }
         }
 
@@ -100,6 +83,9 @@ namespace KREngine
 
         shapes.push_back(circle);
         RenderService::GetInstance().AddDrawable("shape" + std::to_string(shapes.size() - 1), circle);
+
+        currentShapeIndex = shapes.size() - 1;
+        LOG("Circle added with index: %d", currentShapeIndex);
     }
 
     void GameplayState::AddTriangle()
@@ -114,19 +100,72 @@ namespace KREngine
 
         shapes.push_back(triangle);
         RenderService::GetInstance().AddDrawable("shape" + std::to_string(shapes.size() - 1), triangle);
+
+        currentShapeIndex = shapes.size() - 1;
+        LOG("Triangle added with index: %d", currentShapeIndex);
     }
+
+
+    void GameplayState::DeleteCurrentShape()
+    {
+        if (currentShapeIndex < 0 || currentShapeIndex >= static_cast<int>(shapes.size()))
+        {
+            LOG("No shape selected to delete.");
+            return;
+        }
+
+        LOG("Deleting shape at index: %d", currentShapeIndex);
+
+        auto& renderService = RenderService::GetInstance();
+
+        // Remove the drawable from RenderService
+        std::string shapeName = "shape" + std::to_string(currentShapeIndex);
+        renderService.RemoveDrawable(shapeName);
+
+        delete shapes[currentShapeIndex];
+
+        shapes.erase(shapes.begin() + currentShapeIndex);
+
+        for (size_t i = currentShapeIndex; i < shapes.size(); ++i)
+        {
+            std::string oldName = "shape" + std::to_string(i + 1);
+            std::string newName = "shape" + std::to_string(i);
+            renderService.RemoveDrawable(oldName);
+            renderService.AddDrawable(newName, shapes[i]);
+        }
+
+        if (shapes.empty())
+        {
+            currentShapeIndex = -1;
+        }
+        else
+        {
+            currentShapeIndex = std::min(currentShapeIndex, static_cast<int>(shapes.size()) - 1);
+        }
+
+        LOG("Updated shape count: %d", static_cast<int>(shapes.size()));
+        if (currentShapeIndex >= 0)
+        {
+            LOG("New current shape index: %d", currentShapeIndex);
+        }
+        else
+        {
+            LOG("No shapes left to select.");
+        }
+    }
+
+
 
     void GameplayState::SelectNextShape()
     {
         if (shapes.empty())
         {
-            LOG("No shapes to select.");
             return;
         }
 
         currentShapeIndex = (currentShapeIndex + 1) % shapes.size();
-        LOG("Selected next shape: %d", currentShapeIndex);
     }
 }
+
 
 

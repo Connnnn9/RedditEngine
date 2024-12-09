@@ -13,7 +13,6 @@ namespace KREngine
     void RenderService::Initialize(sf::RenderWindow* renderWindow)
     {
         window = renderWindow;
-        LOG("RenderService -- Initialized");
     }
 
     void RenderService::Render()
@@ -33,21 +32,32 @@ namespace KREngine
 
     void RenderService::Terminate()
     {
-        LOG("RenderService -- Terminated");
         window = nullptr;
         drawables.clear();
     }
 
     void RenderService::AddDrawable(const std::string& name, sf::Drawable* drawable)
     {
+        if (drawables.find(name) != drawables.end())
+        {
+            LOG("Drawable with name %s already exists, overwriting.", name.c_str());
+        }
         drawables[name] = drawable;
         LOG("Drawable added: %s", name.c_str());
     }
 
     void RenderService::RemoveDrawable(const std::string& name)
     {
-        drawables.erase(name);
-        LOG("Drawable removed: %s", name.c_str());
+        auto it = drawables.find(name);
+        if (it != drawables.end())
+        {
+            drawables.erase(it);
+            LOG("Drawable removed: %s", name.c_str());
+        }
+        else
+        {
+            LOG("Drawable not found: %s", name.c_str());
+        }
     }
 }
 
