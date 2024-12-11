@@ -12,13 +12,14 @@ namespace KREngine
 
     void InputService::Initialize(sf::RenderWindow* renderWindow)
     {
+        ASSERT(renderWindow, "InputService: Render window is null during initialization!");
         window = renderWindow;
         LOG("InputService -- Initialized");
     }
 
     void InputService::Update()
     {
-        if (!window) return;
+        ASSERT(window, "InputService: Render window is null during update!");
 
         sf::Event event;
         while (window->pollEvent(event))
@@ -38,22 +39,20 @@ namespace KREngine
         }
     }
 
-    bool InputService::IsKeyPressed(sf::Keyboard::Key key)
+    bool InputService::IsKeyPressed(sf::Keyboard::Key key) const
     {
-        return keyStates[key];
+        auto it = keyStates.find(key);
+        return it != keyStates.end() && it->second;
     }
 
-    bool InputService::IsMouseButtonPressed(sf::Mouse::Button button)
+    bool InputService::IsMouseButtonPressed(sf::Mouse::Button button) const
     {
         return sf::Mouse::isButtonPressed(button);
     }
 
-    sf::Vector2i InputService::GetMousePosition()
+    sf::Vector2i InputService::GetMousePosition() const
     {
-        if (window)
-        {
-            return sf::Mouse::getPosition(*window);
-        }
-        return { 0, 0 };
+        ASSERT(window, "InputService: Render window is null for mouse position!");
+        return sf::Mouse::getPosition(*window);
     }
 }

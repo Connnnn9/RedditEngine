@@ -3,17 +3,20 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <map>
+#include "Common.h"
 
-namespace KREngine {
-    class InputService {
+namespace KREngine
+{
+    class InputService
+    {
     public:
         static InputService& GetInstance();
 
         void Initialize(sf::RenderWindow* window);
         void Update();
-        bool IsKeyPressed(sf::Keyboard::Key key);
-        bool IsMouseButtonPressed(sf::Mouse::Button button);
-        sf::Vector2i GetMousePosition();
+        bool IsKeyPressed(sf::Keyboard::Key key) const;
+        bool IsMouseButtonPressed(sf::Mouse::Button button) const;
+        sf::Vector2i GetMousePosition() const;
 
     private:
         InputService() = default;

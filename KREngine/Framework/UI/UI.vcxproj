@@ -104,7 +104,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;IMGUI_ENABLE_DOCKING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Inc;$(SolutionDir)\External\SFML-2.6.2\include;$(SolutionDir)\External\ImGui\Inc;$(SolutionDir)\Framework\UI\Inc;$(SolutionDir)\Framework;$(SolutionDir)\Engine\Inc</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -138,11 +138,9 @@
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Src\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\OptionBox.h" />
-    <ClInclude Include="Inc\UIManager.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

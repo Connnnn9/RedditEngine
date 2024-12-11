@@ -1,6 +1,5 @@
 #include "Precompiled.h"
 #include "RenderService.h"
-#include "Common.h"
 
 namespace KREngine
 {
@@ -12,36 +11,36 @@ namespace KREngine
 
     void RenderService::Initialize(sf::RenderWindow* renderWindow)
     {
+        ASSERT(renderWindow, "RenderService: Render window is null during initialization!");
         window = renderWindow;
+        LOG("RenderService -- Initialized");
     }
 
     void RenderService::Render()
     {
-        if (window)
+        ASSERT(window, "RenderService: Render window is null during rendering!");
+
+        window->clear(sf::Color::Black);
+
+        for (auto& [name, drawable] : drawables)
         {
-            window->clear(sf::Color::Black);
-
-            for (auto& [name, drawable] : drawables)
-            {
-                window->draw(*drawable);
-            }
-
-            window->display();
+            ASSERT(drawable, "RenderService: Drawable is null!");
+            window->draw(*drawable);
         }
+
+        window->display();
     }
 
     void RenderService::Terminate()
     {
         window = nullptr;
         drawables.clear();
+        LOG("RenderService -- Terminated");
     }
 
     void RenderService::AddDrawable(const std::string& name, sf::Drawable* drawable)
     {
-        if (drawables.find(name) != drawables.end())
-        {
-            LOG("Drawable with name %s already exists, overwriting.", name.c_str());
-        }
+        ASSERT(drawable, "RenderService: Cannot add a null drawable!");
         drawables[name] = drawable;
         LOG("Drawable added: %s", name.c_str());
     }
@@ -60,5 +59,3 @@ namespace KREngine
         }
     }
 }
-
-

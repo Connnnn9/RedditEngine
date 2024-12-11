@@ -1,9 +1,10 @@
 #pragma once
 
-// Include all the external libraries
+//std libraries
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <cassert>
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
@@ -16,17 +17,37 @@
 #include <map>
 #include <memory>
 #include <optional>
-#include <sstream> // For std::ostringstream
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
+// Include all the external libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <ImGui/Inc/imgui.h>
-#include <../Framework/UI/Inc/UIManager.h>
+#include <ImGui/Inc/imgui-SFML.h>
 #include <windows.h>
+
+////
+//
+//this is for define and utitlies
+//
+////
+
+#define ASSERT(condition, message)                       \
+    do                                                   \
+    {                                                    \
+        if (!(condition))                                \
+        {                                                \
+            std::cerr << "Assertion Failed: "            \
+                      << message << "\nFile: "           \
+                      << __FILE__ << "\nLine: "          \
+                      << __LINE__ << std::endl;          \
+            std::abort();                                \
+        }                                                \
+    } while (false)
 
 // Namespace for constants
 namespace KREngine 
@@ -94,4 +115,5 @@ namespace KREngine {
             std::cout.rdbuf(logFile.rdbuf()); // Redirect std::cout to file
         }
     }
+
 }

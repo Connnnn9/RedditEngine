@@ -20,22 +20,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\GamePlayState.cpp" />
+    <ClCompile Include="Src\InputComponent.cpp" />
     <ClCompile Include="Src\InputService.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Src\RenderComponent.cpp" />
     <ClCompile Include="Src\RenderService.cpp" />
+    <ClCompile Include="Src\TransformComponent.cpp" />
     <ClCompile Include="Src\UIService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\App.h" />
     <ClInclude Include="Inc\AppState.h" />
     <ClInclude Include="Inc\Common.h" />
+    <ClInclude Include="Inc\Component.h" />
+    <ClInclude Include="Inc\GameObject.h" />
     <ClInclude Include="Inc\GamePlayState.h" />
+    <ClInclude Include="Inc\InputComponent.h" />
     <ClInclude Include="Inc\InputService.h" />
+    <ClInclude Include="Inc\RenderComponent.h" />
     <ClInclude Include="Inc\RenderService.h" />
+    <ClInclude Include="Inc\TransformComponent.h" />
+    <ClInclude Include="Inc\TypeId.h" />
     <ClInclude Include="Inc\UIService.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
@@ -144,7 +154,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc;$(SolutionDir)\External\SFML-2.6.2\include;$(SolutionDir)Framework\UI\Inc;$(SolutionDir)External;$(SolutionDir)\External\ImGui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;$(SolutionDir)\External\SFML-2.6.2\include;$(SolutionDir)Framework\UI\Inc;$(SolutionDir)External;$(SolutionDir)\External\ImGui\Inc</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Precompiled.h</PrecompiledHeaderFile>
     </ClCompile>
