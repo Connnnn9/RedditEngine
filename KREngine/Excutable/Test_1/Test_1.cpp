@@ -1,12 +1,14 @@
-#include "UIService.h"
 #include <SFML/Graphics.hpp>
-#include <imgui.h>
+#include "UIManager.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "Minimal ImGui Test");
-    ImGui::CreateContext();
+    sf::RenderWindow window(sf::VideoMode(800, 600), "ImGui-SFML Example");
+    KREngine::UI::UIManager uiManager;
 
+    uiManager.Initialize(window);
+
+    sf::Clock clock;
     while (window.isOpen())
     {
         sf::Event event;
@@ -16,16 +18,18 @@ int main()
                 window.close();
         }
 
-        ImGui::NewFrame();
-        ImGui::Begin("Test Window");
-        ImGui::Text("Hello, ImGui!");
-        ImGui::End();
-        ImGui::Render();
+        sf::Time deltaTime = clock.restart();
+
+        uiManager.Update(window, deltaTime);
 
         window.clear();
+        uiManager.Render(window);
         window.display();
     }
 
-    ImGui::DestroyContext();
+    uiManager.Terminate();
+
     return 0;
 }
+
+

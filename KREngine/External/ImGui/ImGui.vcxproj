@@ -19,21 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\imconfig-SFML.h" />
     <ClInclude Include="Inc\imconfig.h" />
+    <ClInclude Include="Inc\imgui-SFML.h" />
+    <ClInclude Include="Inc\imgui-SFML_export.h" />
     <ClInclude Include="Inc\imgui.h" />
     <ClInclude Include="Inc\imgui_impl_dx11.h" />
     <ClInclude Include="Inc\imgui_impl_win32.h" />
-    <ClInclude Include="Src\imgui_internal.h" />
-    <ClInclude Include="Src\imstb_rectpack.h" />
-    <ClInclude Include="Src\imstb_textedit.h" />
-    <ClInclude Include="Src\imstb_truetype.h" />
+    <ClInclude Include="Inc\imgui_internal.h" />
+    <ClInclude Include="Inc\imstb_rectpack.h" />
+    <ClInclude Include="Inc\imstb_textedit.h" />
+    <ClInclude Include="Inc\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\imgui-SFML.cpp" />
     <ClCompile Include="Src\imgui.cpp" />
-    <ClCompile Include="Src\imgui_demo.cpp" />
     <ClCompile Include="Src\imgui_draw.cpp" />
-    <ClCompile Include="Src\imgui_impl_dx11.cpp" />
-    <ClCompile Include="Src\imgui_impl_win32.cpp" />
     <ClCompile Include="Src\imgui_tables.cpp" />
     <ClCompile Include="Src\imgui_widgets.cpp" />
   </ItemGroup>
@@ -147,8 +148,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;IMGUI_ENABLE_VIEWPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\include;D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\lib;$(ProjectDir)Inc;D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\KREngine\External\ImGui\Src;D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\KREngine\External\ImGui\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Inc;$(SolutionDir)\External\SFML-2.6.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
     </ClCompile>
@@ -167,7 +168,7 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\SchoolStuff\GitHubProject\VS_Project\RedditEngine\SFML-2.6.2\include;$(ProjectDir)Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>

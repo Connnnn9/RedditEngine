@@ -12,7 +12,7 @@
     <ClInclude Include="Inc\imconfig.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\imgui.h">
+    <ClInclude Include="Inc\imconfig-SFML.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\imgui_impl_dx11.h">
@@ -21,39 +21,42 @@
     <ClInclude Include="Inc\imgui_impl_win32.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Src\imgui_internal.h">
-      <Filter>Src</Filter>
+    <ClInclude Include="Inc\imgui_internal.h">
+      <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Src\imstb_rectpack.h">
-      <Filter>Src</Filter>
+    <ClInclude Include="Inc\imgui-SFML.h">
+      <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Src\imstb_textedit.h">
-      <Filter>Src</Filter>
+    <ClInclude Include="Inc\imgui-SFML_export.h">
+      <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Src\imstb_truetype.h">
-      <Filter>Src</Filter>
+    <ClInclude Include="Inc\imstb_rectpack.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\imstb_textedit.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\imstb_truetype.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\imgui.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\imgui.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\imgui_demo.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="Src\imgui_draw.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\imgui_impl_dx11.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\imgui_impl_win32.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\imgui_tables.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\imgui_widgets.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\imgui-SFML.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

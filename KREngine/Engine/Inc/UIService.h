@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../Framework/UI/Inc/UIManager.h"
+#include "UIManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Time.hpp>
 
 namespace KREngine
 {
@@ -10,14 +11,17 @@ namespace KREngine
     public:
         static UIService& GetInstance();
 
-        void Initialize();
+        void Initialize(sf::RenderWindow& window);
         void Terminate();
-        void Update(sf::RenderWindow& window);
-        void Render();
+        void Update(sf::RenderWindow& window, sf::Time deltaTime);
+        void Render(sf::RenderWindow& window);
 
         UI::UIManager& GetUIManager();
 
     private:
+        UIService() = default;
+        ~UIService() = default;
+
         UI::UIManager mUIManager;
     };
 }
