@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "UIService.h"
 #include "imgui-SFML.h"
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1600, 800), "KREngine: Shape Manager");
