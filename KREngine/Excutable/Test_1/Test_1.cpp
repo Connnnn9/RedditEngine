@@ -4,7 +4,9 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1600, 800), "KREngine: Shape Manager");
+    sf::ContextSettings contextSettings;
+    contextSettings.depthBits = 24;
+    sf::RenderWindow window(sf::VideoMode(1600, 800), "KREngine: Shape Manager", sf::Style::Default, contextSettings);
     KREngine::UIService uiService;
 
     uiService.Initialize(window);
@@ -44,11 +46,14 @@ int main()
 
         window.clear(sf::Color::Black);
 
-        for (const auto& [name, shape] : uiService.GetShapes())
+        if (uiService.ShouldRender2DShapes())
         {
-            if (shape)
+            for (const auto& [name, shape] : uiService.GetShapes())
             {
-                window.draw(*shape);
+                if (shape)
+                {
+                    window.draw(*shape);
+                }
             }
         }
 

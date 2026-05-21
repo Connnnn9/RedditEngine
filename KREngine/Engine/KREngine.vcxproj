@@ -20,7 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\CameraService.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
+    <ClCompile Include="Src\GameObjectHandle.cpp" />
+    <ClCompile Include="Src\GameWorld.cpp" />
     <ClCompile Include="Src\GamePlayState.cpp" />
     <ClCompile Include="Src\InputComponent.cpp" />
     <ClCompile Include="Src\InputService.cpp" />
@@ -30,26 +33,40 @@
     </ClCompile>
     <ClCompile Include="Src\RenderComponent.cpp" />
     <ClCompile Include="Src\RenderService.cpp" />
+    <ClCompile Include="Src\Service.cpp" />
+    <ClCompile Include="Src\TextureService.cpp" />
     <ClCompile Include="Src\TransformComponent.cpp" />
+    <ClCompile Include="Src\UIService3D.cpp" />
     <ClCompile Include="Src\UIService.cpp" />
+    <ClCompile Include="Src\UIServiceObjects.cpp" />
+    <ClCompile Include="Src\UIServicePanels.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\App.h" />
     <ClInclude Include="Inc\AppState.h" />
+    <ClInclude Include="Inc\CameraService.h" />
     <ClInclude Include="Inc\Common.h" />
     <ClInclude Include="Inc\Component.h" />
     <ClInclude Include="Inc\GameObject.h" />
+    <ClInclude Include="Inc\GameObjectHandle.h" />
+    <ClInclude Include="Inc\GameWorld.h" />
     <ClInclude Include="Inc\GamePlayState.h" />
     <ClInclude Include="Inc\InputComponent.h" />
     <ClInclude Include="Inc\InputService.h" />
     <ClInclude Include="Inc\RenderComponent.h" />
     <ClInclude Include="Inc\RenderService.h" />
+    <ClInclude Include="Inc\Service.h" />
+    <ClInclude Include="Inc\TextureService.h" />
     <ClInclude Include="Inc\TransformComponent.h" />
     <ClInclude Include="Inc\TypeId.h" />
     <ClInclude Include="Inc\UIService.h" />
+    <ClInclude Include="Inc\KREngine.h" />
     <ClInclude Include="Src\Precompiled.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Framework\Math\Math.vcxproj">
+      <Project>{9c414991-c024-4f31-b72e-1d76ce53d422}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\External\ImGui\ImGui.vcxproj">
       <Project>{52d656a2-a2f4-4c54-a3c7-653427bed1e8}</Project>
     </ProjectReference>

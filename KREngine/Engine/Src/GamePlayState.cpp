@@ -84,7 +84,7 @@ namespace KREngine
         shapes.push_back(circle);
         RenderService::GetInstance().AddDrawable("shape" + std::to_string(shapes.size() - 1), circle);
 
-        currentShapeIndex = shapes.size() - 1;
+        currentShapeIndex = static_cast<int>(shapes.size()) - 1;
         LOG("Circle added with index: %d", currentShapeIndex);
     }
 
@@ -101,7 +101,7 @@ namespace KREngine
         shapes.push_back(triangle);
         RenderService::GetInstance().AddDrawable("shape" + std::to_string(shapes.size() - 1), triangle);
 
-        currentShapeIndex = shapes.size() - 1;
+        currentShapeIndex = static_cast<int>(shapes.size()) - 1;
         LOG("Triangle added with index: %d", currentShapeIndex);
     }
 

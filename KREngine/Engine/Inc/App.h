@@ -38,7 +38,7 @@ namespace KREngine
 
         sf::RenderWindow* GetWindow()
         {
-            return window;
+            return mWindow.get();
         }
 
     private:
@@ -46,7 +46,7 @@ namespace KREngine
         AppState* mCurrentState = nullptr;
         AppState* mNextState = nullptr;
         bool mRunning = false;
-        sf::RenderWindow* window = nullptr;
+        std::unique_ptr<sf::RenderWindow> mWindow;
 
         void Initialize(const AppConfig& config);
         void Terminate();

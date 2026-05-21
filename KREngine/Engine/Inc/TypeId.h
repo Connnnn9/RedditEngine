@@ -19,6 +19,9 @@ namespace KREngine
         UI,
         Render,
         Input,
+        Camera,
+        Texture,
+        Update,
         Physics,
     };
 }

@@ -25,4 +25,20 @@ namespace KREngine
         }
         mComponents.clear();
     }
+
+    void GameObject::Update(float deltaTime)
+    {
+        for (auto& [type, component] : mComponents)
+        {
+            component->Update(deltaTime);
+        }
+    }
+
+    void GameObject::DebugUI()
+    {
+        for (auto& [type, component] : mComponents)
+        {
+            component->DebugUI();
+        }
+    }
 }

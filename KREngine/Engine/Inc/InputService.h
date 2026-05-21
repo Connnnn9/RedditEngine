@@ -13,6 +13,7 @@ namespace KREngine
         static InputService& GetInstance();
 
         void Initialize(sf::RenderWindow* window);
+        void Terminate();
         void Update();
         bool IsKeyPressed(sf::Keyboard::Key key) const;
         bool IsMouseButtonPressed(sf::Mouse::Button button) const;

@@ -2,11 +2,14 @@
 #include "UIService.h"
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include <algorithm>
+#include <ctime>
 
 namespace KREngine
 {
 	void UIService::Initialize(sf::RenderWindow& window)
 	{
+		CameraService::GetInstance().Initialize();
 		ImGui::SFML::Init(window);
 		ApplyCustomStyle();
 		AddLog("[INFO] UIService Initialized.");
@@ -14,223 +17,109 @@ namespace KREngine
 
 	void UIService::Terminate()
 	{
-		ImGui::SFML::Shutdown();
-		mShapes.clear();
-		mLogs.clear();
 		AddLog("[INFO] UIService Terminated.");
+		mShapes.clear();
+		mPrimitives3D.clear();
+		mLogs.clear();
+		ImGui::SFML::Shutdown();
 	}
 
 	void UIService::Update(sf::RenderWindow& window, sf::Time deltaTime)
 	{
 		ImGui::SFML::Update(window, deltaTime);
+		UpdateCameraControls(window, deltaTime);
+
+		if (Is3DScene() && mAutoRotate3D)
+		{
+			const float rotationDelta = mAutoRotateSpeed * deltaTime.asSeconds();
+			for (auto& [name, primitive] : mPrimitives3D)
+			{
+				primitive.rotation.y += rotationDelta;
+			}
+		}
 	}
 
 	void UIService::Render(sf::RenderWindow& window)
 	{
-		if (ImGui::BeginMainMenuBar())
-		{
-			if (ImGui::BeginMenu("File"))
-			{
-				if (ImGui::MenuItem("Save"))
-					LOG("[DEBUG] Save clicked.");
-				if (ImGui::MenuItem("Exit"))
-					LOG("[DEBUG] Exit clicked.");
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Edit"))
-			{
-				if (ImGui::MenuItem("Undo"))
-					LOG("[DEBUG] Undo clicked.");
-				if (ImGui::MenuItem("Redo"))
-					LOG("[DEBUG] Redo clicked.");
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
+		RenderToolbar(window);
 
-		// Reserve areas for different UI sections
-		ImGui::SetNextWindowPos(ImVec2(0, 20));
-		ImGui::SetNextWindowSize(ImVec2(300, ImGui::GetIO().DisplaySize.y - 20));
+		const ImVec2 displaySize = ImGui::GetIO().DisplaySize;
+		const float menuHeight = 20.0f;
+		const float leftWidth = 280.0f;
+		const float rightWidth = 320.0f;
+		const float consoleHeight = mShowConsole ? std::min(160.0f, std::max(0.0f, displaySize.y - menuHeight - 140.0f)) : 0.0f;
+		const float workHeight = std::max(120.0f, displaySize.y - menuHeight - consoleHeight);
+		const float viewportWidth = std::max(220.0f, displaySize.x - leftWidth - rightWidth);
+
+		ImGui::SetNextWindowPos(ImVec2(0, menuHeight));
+		ImGui::SetNextWindowSize(ImVec2(leftWidth, workHeight));
 		ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 		RenderHierarchy();
 		ImGui::End();
 
-		ImGui::SetNextWindowPos(ImVec2(300, 20));
-		ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x - 600, ImGui::GetIO().DisplaySize.y - 20));
-		ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+		ImGui::SetNextWindowPos(ImVec2(leftWidth, menuHeight));
+		ImGui::SetNextWindowSize(ImVec2(viewportWidth, workHeight));
+		ImGui::Begin("Viewport", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground);
 		RenderViewport(window);
 		ImGui::End();
 
-		ImGui::SetNextWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 300, 20));
-		ImGui::SetNextWindowSize(ImVec2(300, ImGui::GetIO().DisplaySize.y - 20));
+		ImGui::SetNextWindowPos(ImVec2(leftWidth + viewportWidth, menuHeight));
+		ImGui::SetNextWindowSize(ImVec2(rightWidth, workHeight));
 		ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 		RenderInspector();
 		ImGui::End();
 
-		ImGui::SetNextWindowPos(ImVec2(0, ImGui::GetIO().DisplaySize.y - 150));
-		ImGui::SetNextWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, 150));
-		ImGui::Begin("Console", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-		RenderConsole();
-		ImGui::End();
+		if (mShowConsole)
+		{
+			ImGui::SetNextWindowPos(ImVec2(0, displaySize.y - consoleHeight));
+			ImGui::SetNextWindowSize(ImVec2(displaySize.x, consoleHeight));
+			ImGui::Begin("Console", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+			RenderConsole();
+			ImGui::End();
+		}
 
 		ImGui::SFML::Render(window);
 	}
 
-	void UIService::RenderToolbar()
+	SceneMode UIService::GetSceneMode() const
 	{
-		if (ImGui::BeginMainMenuBar())
-		{
-			if (ImGui::BeginMenu("File"))
-			{
-				if (ImGui::MenuItem("Save")) AddLog("[INFO] Save clicked.");
-				if (ImGui::MenuItem("Exit")) AddLog("[INFO] Exit clicked.");
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("Edit"))
-			{
-				if (ImGui::MenuItem("Toggle Theme"))
-				{
-					mThemeDark = !mThemeDark;
-					ApplyCustomStyle();
-					AddLog("[INFO] Theme toggled.");
-				}
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
+		return mSceneMode;
 	}
 
-	void UIService::RenderHierarchy()
+	bool UIService::ShouldRender2DShapes() const
 	{
-		ImGui::Begin("Hierarchy");
-		if (ImGui::Button("Circle")) mDraggedShapeType = "Circle";
-		if (ImGui::Button("Rectangle")) mDraggedShapeType = "Rectangle";
-
-		for (const auto& [name, shape] : mShapes)
-			if (ImGui::Selectable(name.c_str(), name == mSelectedShape))
-				SelectShape(name);
-
-		ImGui::End();
-	}
-
-	void UIService::RenderInspector()
-	{
-		if (mSelectedShape.empty()) return;
-
-		ImGui::Begin("Inspector");
-
-		auto& shape = mShapes[mSelectedShape];
-		sf::Vector2f position = shape->getPosition();
-		float size = shape->getScale().x;
-		float rotation = shape->getRotation();
-		sf::Color color = shape->getFillColor();
-		float colorAsFloat[3] = { color.r / 255.0f, color.g / 255.0f, color.b / 255.0f };
-
-		ImGui::Text("Selected: %s", mSelectedShape.c_str());
-		if (ImGui::DragFloat2("Position", &position.x, 1.0f)) shape->setPosition(position);
-		if (ImGui::DragFloat("Size", &size, 0.1f, 0.1f, 10.0f)) shape->setScale(size, size);
-		if (ImGui::DragFloat("Rotation", &rotation, 1.0f, 0.0f, 360.0f)) shape->setRotation(rotation);
-		if (ImGui::ColorEdit3("Color", colorAsFloat))
-		{
-			color.r = static_cast<sf::Uint8>(colorAsFloat[0] * 255);
-			color.g = static_cast<sf::Uint8>(colorAsFloat[1] * 255);
-			color.b = static_cast<sf::Uint8>(colorAsFloat[2] * 255);
-			shape->setFillColor(color);
-		}
-
-		if (ImGui::Button("Delete Shape")) DeleteSelectedShape();
-
-		ImGui::End();
-	}
-
-	void UIService::RenderConsole()
-	{
-		ImGui::Begin("Console");
-		for (const std::string& log : mLogs) ImGui::TextWrapped(log.c_str());
-		if (ImGui::Button("Clear Console")) mLogs.clear();
-		ImGui::End();
-	}
-
-	void UIService::RenderViewport(sf::RenderWindow& window)
-	{
-		if (!mDraggedShapeType.empty() && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-			std::unique_ptr<sf::Shape> shape;
-
-			if (mDraggedShapeType == "Circle")
-			{
-				shape = std::make_unique<sf::CircleShape>(50.f);
-				shape->setFillColor(sf::Color::Green);
-			}
-			else if (mDraggedShapeType == "Rectangle")
-			{
-				shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(100.f, 50.f));
-				shape->setFillColor(sf::Color::Blue);
-			}
-
-			if (shape)
-			{
-				shape->setPosition(mousePos);
-				CreateShape(mDraggedShapeType + std::to_string(mShapes.size()), std::move(shape));
-				mDraggedShapeType.clear();
-			}
-		}
-	}
-
-	void UIService::CreateShape(const std::string& name, std::unique_ptr<sf::Shape> shape)
-	{
-		if (!shape) { AddLog("[ERROR] Null shape passed to CreateShape."); return; }
-		mShapes[name] = std::move(shape);
-		AddLog("[DEBUG] Created shape: " + name);
-	}
-
-	void UIService::SelectShape(const std::string& name)
-	{
-		if (mShapes.find(name) != mShapes.end())
-		{
-			mSelectedShape = name;
-			AddLog("[DEBUG] Selected shape: " + name);
-		}
-	}
-
-	void UIService::DeleteSelectedShape()
-	{
-		if (!mSelectedShape.empty())
-		{
-			mShapes.erase(mSelectedShape);
-			mSelectedShape.clear();
-		}
-	}
-
-	const std::unordered_map<std::string, std::unique_ptr<sf::Shape>>& UIService::GetShapes() const
-	{
-		return mShapes;
+		return Is2DScene();
 	}
 
 	void UIService::ApplyCustomStyle()
 	{
 		ImGuiStyle& style = ImGui::GetStyle();
-		style.WindowRounding = 5.0f;
-		style.FrameRounding = 5.0f;
-		style.GrabRounding = 5.0f;
-		style.TabRounding = 5.0f;
+		style.WindowRounding = 4.0f;
+		style.FrameRounding = 4.0f;
+		style.GrabRounding = 4.0f;
+		style.TabRounding = 4.0f;
+		style.WindowPadding = ImVec2(12.0f, 10.0f);
+		style.FramePadding = ImVec2(8.0f, 5.0f);
+		style.ItemSpacing = ImVec2(8.0f, 8.0f);
+
+		if (!mThemeDark)
+		{
+			ImGui::StyleColorsLight();
+			return;
+		}
 
 		ImVec4* colors = style.Colors;
-		colors[ImGuiCol_WindowBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.0f);
-		colors[ImGuiCol_TitleBg] = ImVec4(0.2f, 0.2f, 0.4f, 1.0f);
-		colors[ImGuiCol_TitleBgActive] = ImVec4(0.3f, 0.3f, 0.6f, 1.0f);
-		colors[ImGuiCol_Button] = ImVec4(0.3f, 0.3f, 0.5f, 1.0f);
-		colors[ImGuiCol_ButtonHovered] = ImVec4(0.4f, 0.4f, 0.7f, 1.0f);
-		colors[ImGuiCol_ButtonActive] = ImVec4(0.5f, 0.5f, 0.8f, 1.0f);
-		colors[ImGuiCol_Tab] = ImVec4(0.2f, 0.2f, 0.4f, 1.0f);
-		colors[ImGuiCol_TabHovered] = ImVec4(0.3f, 0.3f, 0.6f, 1.0f);
-		colors[ImGuiCol_TabActive] = ImVec4(0.4f, 0.4f, 0.7f, 1.0f);
-		colors[ImGuiCol_FrameBg] = ImVec4(0.15f, 0.15f, 0.25f, 1.0f);
-		colors[ImGuiCol_FrameBgHovered] = ImVec4(0.2f, 0.2f, 0.3f, 1.0f);
-		colors[ImGuiCol_FrameBgActive] = ImVec4(0.25f, 0.25f, 0.4f, 1.0f);
-		colors[ImGuiCol_CheckMark] = ImVec4(0.5f, 0.5f, 0.9f, 1.0f);
-
+		colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.11f, 0.12f, 1.0f);
+		colors[ImGuiCol_TitleBg] = ImVec4(0.13f, 0.15f, 0.18f, 1.0f);
+		colors[ImGuiCol_TitleBgActive] = ImVec4(0.18f, 0.22f, 0.26f, 1.0f);
+		colors[ImGuiCol_MenuBarBg] = ImVec4(0.12f, 0.13f, 0.15f, 1.0f);
+		colors[ImGuiCol_Button] = ImVec4(0.18f, 0.28f, 0.34f, 1.0f);
+		colors[ImGuiCol_ButtonHovered] = ImVec4(0.25f, 0.39f, 0.47f, 1.0f);
+		colors[ImGuiCol_ButtonActive] = ImVec4(0.33f, 0.50f, 0.58f, 1.0f);
+		colors[ImGuiCol_FrameBg] = ImVec4(0.15f, 0.17f, 0.19f, 1.0f);
+		colors[ImGuiCol_FrameBgHovered] = ImVec4(0.20f, 0.24f, 0.27f, 1.0f);
+		colors[ImGuiCol_FrameBgActive] = ImVec4(0.24f, 0.31f, 0.35f, 1.0f);
+		colors[ImGuiCol_CheckMark] = ImVec4(0.38f, 0.72f, 0.70f, 1.0f);
 	}
 
 	void UIService::AddLog(const std::string& message)

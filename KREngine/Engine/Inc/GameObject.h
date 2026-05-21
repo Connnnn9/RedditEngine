@@ -4,10 +4,15 @@
 #include <typeindex>
 #include <memory>
 #include <cassert>
+#include <string>
+#include <utility>
+
+#include "GameObjectHandle.h"
 
 namespace KREngine
 {
     class Component;
+    class GameWorld;
 
     class GameObject
     {
@@ -48,8 +53,22 @@ namespace KREngine
 
         void Initialize();
         void Terminate();
+        void Update(float deltaTime);
+        void DebugUI();
+
+        const std::string& GetName() const { return mName; }
+        void SetName(std::string name) { mName = std::move(name); }
+
+        const GameObjectHandle& GetHandle() const { return mHandle; }
+        GameWorld* GetWorld() { return mWorld; }
+        const GameWorld* GetWorld() const { return mWorld; }
 
     private:
+        friend class GameWorld;
+
         std::unordered_map<std::type_index, std::unique_ptr<Component>> mComponents;
+        std::string mName = "GameObject";
+        GameObjectHandle mHandle;
+        GameWorld* mWorld = nullptr;
     };
 }

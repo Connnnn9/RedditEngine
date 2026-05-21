@@ -9,10 +9,10 @@ namespace KREngine
     {
         LOG("Initializing KREngine...");
 
-        window = new sf::RenderWindow(sf::VideoMode(config.winWidth, config.winHeight), config.appName);
+        mWindow = std::make_unique<sf::RenderWindow>(sf::VideoMode(config.winWidth, config.winHeight), config.appName);
 
-        RenderService::GetInstance().Initialize(window);
-        InputService::GetInstance().Initialize(window);
+        RenderService::GetInstance().Initialize(mWindow.get());
+        InputService::GetInstance().Initialize(mWindow.get());
 
         mRunning = true;
 
@@ -31,6 +31,11 @@ namespace KREngine
         while (mRunning)
         {
             InputService::GetInstance().Update();
+            if (!mWindow || !mWindow->isOpen())
+            {
+                Quit();
+                continue;
+            }
 
             // Terminate the app when Escape is pressed
             if (InputService::GetInstance().IsKeyPressed(sf::Keyboard::Escape))
@@ -69,12 +74,9 @@ namespace KREngine
     {
         LOG("Terminating KREngine...");
 
+        InputService::GetInstance().Terminate();
         RenderService::GetInstance().Terminate();
-        if (window)
-        {
-            delete window;
-            window = nullptr;
-        }
+        mWindow.reset();
 
         LOG("KREngine terminated successfully.");
     }

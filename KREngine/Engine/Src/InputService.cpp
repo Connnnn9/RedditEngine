@@ -17,6 +17,13 @@ namespace KREngine
         LOG("InputService -- Initialized");
     }
 
+    void InputService::Terminate()
+    {
+        window = nullptr;
+        keyStates.clear();
+        LOG("InputService -- Terminated");
+    }
+
     void InputService::Update()
     {
         ASSERT(window, "InputService: Render window is null during update!");

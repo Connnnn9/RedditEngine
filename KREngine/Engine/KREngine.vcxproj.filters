@@ -27,10 +27,16 @@
     <ClCompile Include="Src\App.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\CameraService.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
     <ClCompile Include="Src\GamePlayState.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\RenderService.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TextureService.cpp">
       <Filter>Src\Services</Filter>
     </ClCompile>
     <ClCompile Include="Src\InputService.cpp">
@@ -39,8 +45,26 @@
     <ClCompile Include="Src\UIService.cpp">
       <Filter>Src\Services</Filter>
     </ClCompile>
+    <ClCompile Include="Src\UIService3D.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UIServiceObjects.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\UIServicePanels.cpp">
+      <Filter>Src\Services</Filter>
+    </ClCompile>
     <ClCompile Include="Src\GameObject.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObjectHandle.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameWorld.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Service.cpp">
+      <Filter>Src\Services</Filter>
     </ClCompile>
     <ClCompile Include="Src\TransformComponent.cpp">
       <Filter>Src\Component</Filter>
@@ -65,10 +89,16 @@
     <ClInclude Include="Inc\AppState.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\CameraService.h">
+      <Filter>Inc\Services</Filter>
+    </ClInclude>
     <ClInclude Include="Inc\GamePlayState.h">
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\RenderService.h">
+      <Filter>Inc\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\TextureService.h">
       <Filter>Inc\Services</Filter>
     </ClInclude>
     <ClInclude Include="Inc\InputService.h">
@@ -82,6 +112,18 @@
     </ClInclude>
     <ClInclude Include="Inc\GameObject.h">
       <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GameObjectHandle.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\GameWorld.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\KREngine.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Service.h">
+      <Filter>Inc\Services</Filter>
     </ClInclude>
     <ClInclude Include="Inc\TypeId.h">
       <Filter>Inc</Filter>
